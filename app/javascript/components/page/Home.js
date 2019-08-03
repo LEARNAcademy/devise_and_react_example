@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import {Link} from 'react-router-dom'
 class Home extends React.Component {
  
 
@@ -20,7 +21,10 @@ class Home extends React.Component {
               >
                 {apartment.street} {apartment.city}
                 {apartment.user_id === currentUserId &&
-                  <button onClick={()=> deleteAction(apartment.id)}>delete</button>
+                  <div>
+                    <button onClick={()=> deleteAction(apartment.id)}>delete</button>
+                    <Link to={`/edit-apartment/${apartment.id}`}>Edit</Link>
+                  </div>
                 }
               </li>
             )

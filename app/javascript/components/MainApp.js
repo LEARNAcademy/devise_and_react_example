@@ -45,6 +45,10 @@ class MainApp extends React.Component {
     })
   }
   
+  editApartment = (id, attrs) => {
+    console.log("editing", id, attrs) 
+  }
+  
   deleteApartment = (id) =>{
     return fetch(`/apartments/${id}`, {
         method: 'DELETE'
@@ -53,12 +57,13 @@ class MainApp extends React.Component {
       if(response.status === 200){
         this.getApartments()
       }else{
-        return response.json()
+        response.json()
+        .then(payload => {
+          this.setState({error: payload.error})
+        })
       }
     })
-    .then(payload => {
-      this.setState({error: payload.error})
-    })
+
   }
  
   render () {
@@ -118,6 +123,17 @@ class MainApp extends React.Component {
                     <NewApartment 
                       {...props}
                       onSubmit={this.createApartment}
+                    />
+                  )
+                }}
+              />
+              <Route
+                path="/edit-apartment/:id"
+                render={ (props) => {
+                  return(
+                    <EditApartment
+                      {...props}
+                      onSubmit={this.editApartment}
                     />
                   )
                 }}
