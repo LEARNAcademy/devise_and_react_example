@@ -19,7 +19,7 @@ class MainApp extends React.Component {
     this.getApartments()
   }
   
-  getApartments(){
+  getApartments = () => {
     fetch("/apartments")
     .then( response => {
       return response.json()
@@ -27,6 +27,10 @@ class MainApp extends React.Component {
     .then( apartments => {
       this.setState({apartments})
     })
+  }
+  
+  createApartment = (attrs) =>{
+    console.log("Yippeee, these are the attrs", attrs)
   }
  
   render () {
@@ -71,7 +75,17 @@ class MainApp extends React.Component {
           
           {logged_in &&
             <Switch>
-              <Route component={NewApartment} path="/new-apartment" />
+              <Route 
+                path="/new-apartment" 
+                render={ (props) => {
+                  return(
+                    <NewApartment 
+                      {...props}
+                      onSubmit={this.createApartment}
+                    />
+                  )
+                }}
+              />
             </Switch>
           }
 

@@ -1,7 +1,9 @@
 ## TODO
 done - Create Apartment model
-Create Apartment API endpoint
-Fetch List from Frontend
-Create an Apartment
+done - Create Apartment API endpoint
+done - Fetch List from Frontend
+done - The Create Apartment API endpint
+New Apartment Component
+Reload Home after creating an apartment
 Delete apartment if logged in 
 Edit apartment if logged in
