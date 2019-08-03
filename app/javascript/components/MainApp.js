@@ -31,6 +31,18 @@ class MainApp extends React.Component {
   
   createApartment = (attrs) =>{
     console.log("Yippeee, these are the attrs", attrs)
+    return fetch("/apartments",{
+      method: 'POST',
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({apartment: attrs})
+    })
+    .then(response => {
+      if(response.status === 201){
+        this.getApartments()
+      }
+    })
   }
  
   render () {
@@ -48,6 +60,9 @@ class MainApp extends React.Component {
         
         <Router>
           <div className="TopNav">
+            <div>
+              <Link to="/">Home</Link>
+            </div>
             {logged_in &&
               <div>
                 <Link to="/new-apartment" >New Apartment</Link>

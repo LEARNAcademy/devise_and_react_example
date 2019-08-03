@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import {Redirect} from 'react-router-dom'
 class NewApartment extends React.Component {
   constructor(props){
     super(props)
@@ -22,11 +23,19 @@ class NewApartment extends React.Component {
     const{ onSubmit } = this.props 
     const{ form } = this.state
     onSubmit(form)
+    .then(()=>{
+      this.setState({createSuccess: true})
+    })
   } 
   render () {
-    const{ street, city } = this.state
+    const{ 
+      street, 
+      city,
+      createSuccess
+    } = this.state
     return (
       <React.Fragment>
+        { createSuccess && <Redirect to="/"/> }
         <h1>New Apartment</h1>
         <div>
           <label>Street</label>
