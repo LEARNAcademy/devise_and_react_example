@@ -1,6 +1,11 @@
 import React from "react"
 import PropTypes from "prop-types"
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import {
+  BrowserRouter as Router, 
+  Link,
+  Route, 
+  Switch
+} from 'react-router-dom'
 
 import Home from './page/Home'
 import NewApartment from './page/NewApartment'
@@ -35,20 +40,22 @@ class MainApp extends React.Component {
     
     return (
       <React.Fragment>
-        <div className="TopNav">
-          {logged_in &&
-            <div>
-              <a href={sign_out_route}>Log Out</a>
-            </div>
-          }
-          {!logged_in &&
-            <div>
-              <a href={sign_in_route}>Log In</a>
-            </div>
-          }
-        </div>
+
         
         <Router>
+          <div className="TopNav">
+            {logged_in &&
+              <div>
+                <Link to="/new-apartment" >New Apartment</Link>
+                <a href={sign_out_route}>Log Out</a>
+              </div>
+            }
+            {!logged_in &&
+              <div>
+                <a href={sign_in_route}>Log In</a>
+              </div>
+            }
+          </div>
           <Route 
             exact 
             path="/"
