@@ -4,14 +4,25 @@ class Home extends React.Component {
  
 
   render () {
-    const {apartments} = this.props
+    const {
+      apartments,
+      currentUserId,
+      deleteAction
+    } = this.props
     return (
       <React.Fragment>
         <h1>Apartments</h1>
         <ul>
           {apartments.map((apartment) => {
             return(
-              <li key={apartment.id}>{apartment.street} {apartment.city}</li>
+              <li 
+                key={apartment.id}
+              >
+                {apartment.street} {apartment.city}
+                {apartment.user_id === currentUserId &&
+                  <button onClick={()=> deleteAction(apartment.id)}>delete</button>
+                }
+              </li>
             )
           })}
         </ul>

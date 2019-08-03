@@ -14,7 +14,8 @@ class MainApp extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      apartments: []
+      apartments: [],
+      error: null,
     }
     this.getApartments()
   }
@@ -30,7 +31,6 @@ class MainApp extends React.Component {
   }
   
   createApartment = (attrs) =>{
-    console.log("Yippeee, these are the attrs", attrs)
     return fetch("/apartments",{
       method: 'POST',
       headers:{
@@ -44,19 +44,38 @@ class MainApp extends React.Component {
       }
     })
   }
+  
+  deleteApartment = (id) =>{
+    return fetch(`/apartments/${id}`, {
+        method: 'DELETE'
+      }
+    ).then(response => {
+      if(response.status === 200){
+        this.getApartments()
+      }else{
+        return response.json()
+      }
+    })
+    .then(payload => {
+      this.setState({error: payload.error})
+    })
+  }
  
   render () {
     const{ 
       logged_in, 
       sign_out_route, 
-      sign_in_route 
+      sign_in_route,
+      current_user_id,
     } = this.props
     
-    const{ apartments } = this.state 
+    const{ apartments, error } = this.state 
     
     return (
       <React.Fragment>
-
+        {error &&
+          <h2>{error}</h2>
+        }
         
         <Router>
           <div className="TopNav">
@@ -82,7 +101,9 @@ class MainApp extends React.Component {
               return(
                 <Home 
                   {...props} 
+                  currentUserId = {current_user_id}
                   apartments={apartments} 
+                  deleteAction = {this.deleteApartment}
                 />
               )
             }}
